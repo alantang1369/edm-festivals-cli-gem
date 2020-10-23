@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require './lib/edm_festivals'
+
+EdmFestivals::CLI.new.call

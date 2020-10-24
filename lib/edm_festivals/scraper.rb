@@ -11,4 +11,20 @@ class EdmFestivals::Scraper
         festivals
     end     
 
+    def self.scrape_festival_page(festival_url)
+        festival = {}
+        festival_page = Nokogiri::HTML(open(festival_url))
+        
+        festival[:description] = festival_page.css(".col-xs-12.nopadding.description").text
+        festival[:vistors ] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.disc").text.gsub(/\D/,"")
+        festival[:venue_type] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.disc").text.gsub(/(\d|Multi Day Festival|One)/,"")
+        festival[:length] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.nomarginright.disc").text
+        festival[:website] = festival_page.css(".col-xs-12.nopadding.eventlinks.link a").attr('href').text
+        
+        festival
+    end
+
+
+
+
 end    

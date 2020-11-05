@@ -17,7 +17,7 @@ class EdmFestivals::Scraper
         
         festival[:description] = festival_page.css(".col-xs-12.nopadding.description").text
         festival[:visitors ] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.disc").text.gsub(/\D/,"").strip
-        festival[:venue_type] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.disc").text.gsub(/(\d|Multi Day Festival|One)/,"").strip
+        festival[:venue_type] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.disc").text.gsub(/(\d|Multi Day Festival|Single Day Event)/,"").strip
         festival[:length] = festival_page.css(".col-xs-auto.col-sm-auto.nopadding.nomarginright.disc").text
         festival[:website] = festival_page.css(".col-xs-12.nopadding.eventlinks.link a").text
         

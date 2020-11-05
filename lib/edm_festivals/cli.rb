@@ -18,16 +18,17 @@ class EdmFestivals::CLI
     end
 
     def list(from_num)
+        puts ""
         puts "Here is the top #{from_num + 1} to #{from_num +10}:"
         EdmFestivals::Festival.all[from_num, 10].each.with_index(from_num) do |festival, index|
             puts "#{index + 1}. #{festival.name} - #{festival.country}"
         end
-        from_num += 10
+        
     end
 
     def print_info(input)
         input = input.to_i
-        puts "Name: #{EdmFestivals::Festival.all[input - 1].name}"
+        puts "Name of The Festival: #{EdmFestivals::Festival.all[input - 1].name}"
         puts ""
         puts "Description: #{EdmFestivals::Festival.all[input - 1].description}"
         puts ""    
@@ -42,32 +43,33 @@ class EdmFestivals::CLI
     end
 
     def start 
+       puts ""
        puts "Welcome to the top 100 EDM festivals around the world!"
        puts "        ..................***................" 
        from_num = 0 
-       from_num = list(from_num) 
-       puts ""
-       puts "Would you like to know more information of any event?"
+       list(from_num) 
+       
+       
        input = ""
        until input == "exit"
-            if from_num < 100 
+            
                 puts ""
+                puts "Would you like to know more information of any festivals?"
                 puts "Enter the index number of the festival you are interested in."
-                puts "Enter 'next' if you want to see more festivals or 'exit' if you want to exit."
+                puts "Enter 'next' for next page, 'back' for previous page or 'exit' to exit."
                 input = gets.strip
-                if input.to_i.between?(from_num - 9, from_num)
+                if input.to_i.between?(from_num + 1, from_num + 10)
                     print_info(input)
-                elsif input == "next"
-                    from_num = list(from_num)
-                end
-            else  
-                puts ""
-                puts "Enter the index number of the festival you are interested in or 'exit' if you want to exit."
-                input =gets.strip
-                print_info(input)  if input.to_i.between?(from_num - 9, from_num)
-            end    
+                elsif input.downcase == "next" && from_num < 90
+                    from_num += 10 
+                    list(from_num)
+                elsif input.downcase == "back" && from_num > 0 
+                    from_num -= 10
+                    list(from_num)
+                end  
 
         end
+        puts ""
         puts "Hopefully, you got some helpful information about EDM festivals around the world."
         
            

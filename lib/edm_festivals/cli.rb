@@ -1,7 +1,7 @@
 class EdmFestivals::CLI 
     def call 
         create_festivals
-        add_attributes_to_festivals
+        #add_attributes_to_festivals
         start
     end
 
@@ -48,8 +48,6 @@ class EdmFestivals::CLI
        puts "        ..................***................" 
        from_num = 0 
        list(from_num) 
-       
-       
        input = ""
        until input == "exit"
             
@@ -59,6 +57,9 @@ class EdmFestivals::CLI
                 puts "Enter 'next' for next page, 'back' for previous page or 'exit' to exit."
                 input = gets.strip
                 if input.to_i.between?(from_num + 1, from_num + 10)
+                    event = EdmFestivals::Festival.all[input.to_i - 1]
+                    details = EdmFestivals::Scraper.festival_info_page("https://www.electronic-festivals.com/" + event.festival_url)
+                    event.add_attributes(details)
                     print_info(input)
                 elsif input.downcase == "next" && from_num < 90
                     from_num += 10 
@@ -91,7 +92,6 @@ class EdmFestivals::CLI
         
     end
 
-    
-
 end
+
 
